@@ -1,0 +1,31 @@
+<!-- app/views/weather/forecast.html.erb -->
+<h1>Weather Forecast</h1>
+
+<%= form_tag weather_forecast_path, method: :get do %>
+  <%= label_tag :city, 'City:' %>
+  <%= text_field_tag :city, params[:city] %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<% if @forecast %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>High Temp</th>
+        <th>Low Temp</th>
+        <th>Weather</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @forecast.each do |entry| %>
+        <tr>
+          <td><%= entry['dt_txt'] %></td>
+          <td><%= entry['main']['temp_max'].round(2) %> °C</td>
+          <td><%= entry['main']['temp_min'].round(2) %> °C</td>
+          <td><%= entry['weather'].first['description'].capitalize %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
