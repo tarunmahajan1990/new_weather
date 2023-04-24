@@ -16,7 +16,7 @@ module OpenWeatherMap
     private
 
     def lat
-      geocoded_city_response.first['lat']
+       geocoded_city_response.first['lat']
     end
 
     def lon
@@ -24,7 +24,7 @@ module OpenWeatherMap
     end
 
     def geocoded_city_response
-      @geocoded_city_response ||= Geocode.new(@api_key).geocode(@city)
+     @geocoded_city_response ||= Geocode.new(@api_key).geocode(@city)
     end
   end
 end

@@ -7,25 +7,45 @@
   <%= submit_tag 'Search' %>
 <% end %>
 
-<% if @forecast %>
+
+<br><br>
+<%= "Only display the highest and lowest values for each day of the existing forecast. We do not want hourly entries." %>
+<% if @temperatures %>
   <table>
-    <thead>
+  <thead>
+    <tr>
+      <th style="width: 10%">Date</th>
+      <th>Highest Temperature</th>
+      <th>Lowest Temperature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @temperatures.each do |temperature| %>
       <tr>
-        <th>Date</th>
-        <th>High Temp</th>
-        <th>Low Temp</th>
-        <th>Weather</th>
+        <td><%= temperature[:date] %></td>
+        <td style="text-align: center"><%= temperature[:highest_temp].round(2) %> °C</td>
+        <td style="text-align: center"><%= temperature[:lowest_temp].round(2) %> °C</td>
       </tr>
-    </thead>
-    <tbody>
-      <% @forecast.each do |entry| %>
-        <tr>
-          <td><%= entry['dt_txt'] %></td>
-          <td><%= entry['main']['temp_max'].round(2) %> °C</td>
-          <td><%= entry['main']['temp_min'].round(2) %> °C</td>
-          <td><%= entry['weather'].first['description'].capitalize %></td>
-        </tr>
-      <% end %>
-    </tbody>
+    <% end %>
+  </tbody>
   </table>
 <% end %>
+
+
+<br><br>
+<p><b>Retrieve the current weather conditions for the submitted city using the OpenWeatherMap API.</b></p>
+<% if @temperatures %>
+  <%= "Current temperature in <b>#{@city}</b>: #{@temperature}°C".html_safe %><br>
+  <%= "Current weather description in <b>#{@city}</b>: #{@weather_description}".html_safe %>
+<% end %>
+
+
+
+<br><br>
+<p><b>Display the current temperature, humidity, and a brief weather description.</b></p>
+<% if @temperatures %>
+  <%= "Current temperature in <b>#{@city}</b>: #{@temperature}°C".html_safe %><br>
+  <%= "Humidity in <b>#{@city}</b>: #{@humidity}°C".html_safe %><br>
+  <%= "Current weather description in <b>#{@city}</b>: #{@weather_description}".html_safe %>
+<% end %>
+<br><br>
